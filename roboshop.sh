@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 AMI_ID="ami-09c813fb71547fc4f"
-SG_ID="sg-0e11bbf53d62f5bfb" # replace with your SD ID
+SG_ID="sg-0e11bbf53d62f5bfb" # replace with your SG ID
 
 for instance in $@
 do
