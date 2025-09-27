@@ -36,7 +36,8 @@ VALIDATE $? "Enabling NodeJS 20"
 dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "Installing NodeJS"
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
+
+useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop  &>>$LOG_FILE
 VALIDATE $? "Creating system user"
 
 mkdir /app
@@ -52,7 +53,7 @@ VALIDATE $? "unzip catalogue"
 npm install &>>$LOG_FILE
 VALIDATE $? "Install dependencies"
 cp catalogue.service /etc/systemd/system/catalogue.service
-VALIDATE $? "creating app directory"
+VALIDATE $? "copy systemctl service"
 systemctl daemon-reload
 systemctl enable catalogue &>>$LOG_FILE
 VALIDATE $? "Enable catalogue"
