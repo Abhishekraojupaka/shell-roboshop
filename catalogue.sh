@@ -31,10 +31,8 @@ VALIDATE(){ # functions receive inputs through args just like shell script args
 #### NodeJS ####
 dnf module disable nodejs -y &>>$LOG_FILE
 VALIDATE $? "Disabling NodeJS"
-
 dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "Enabling NodeJS 20"
-
 dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "Installing NodeJS"
 
@@ -46,31 +44,23 @@ VALIDATE $? "Creating app directory"
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading catalogue application"
-
 cd /app 
 VALIDATE $? "Changing to app directory"
-
 unzip /tmp/catalogue.zip &>>$LOG_FILE
 VALIDATE $? "Unzip catalogue"
-
 npm install &>>$LOG_FILE
 VALIDATE $? "Install dependencies"
-
 cp catalogue.service /etc/systemd/system/catalogue.service &>>$LOG_FILE
 VALIDATE $? "copy  systemctl service"
-
 systemctl daemon-reload
 systemctl enable catalogue &>>$LOG_FILE
 VALIDATE $? "Enable catalogue"
 
 cp mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "copy mongo repo"
-
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Install MongoDB client"
-
 mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
 VALIDATE $? "Load catalogue products"
-
 systemctl restart catalogue
 VALIDATE $? "Restarted catalogue"
