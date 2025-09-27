@@ -39,28 +39,30 @@ VALIDATE $? "Installing NodeJS"
 useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
 VALIDATE $? "Creating system user"
 
-mkdir /app 
+mkdir /app
 VALIDATE $? "Creating app directory"
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading catalogue application"
-cd /app 
-VALIDATE $? "Changing to app directory"
+
+cd /app
+VALIDATE $? "Changing to app directory" 
 unzip /tmp/catalogue.zip &>>$LOG_FILE
-VALIDATE $? "Unzip catalogue"
+VALIDATE $? "unzip catalogue"
 npm install &>>$LOG_FILE
 VALIDATE $? "Install dependencies"
-cp catalogue.service /etc/systemd/system/catalogue.service &>>$LOG_FILE
-VALIDATE $? "copy  systemctl service"
+cp catalogue.service /etc/systemd/system/catalogue.service
+VALIDATE $? "creating app directory"
 systemctl daemon-reload
 systemctl enable catalogue &>>$LOG_FILE
 VALIDATE $? "Enable catalogue"
 
 cp mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "copy mongo repo"
+
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Install MongoDB client"
 mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
 VALIDATE $? "Load catalogue products"
-systemctl start catalogue
+systemctl restart catalogue
 VALIDATE $? "Restarted catalogue"
