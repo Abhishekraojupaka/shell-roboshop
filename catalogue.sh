@@ -72,5 +72,5 @@ VALIDATE $? "Install MongoDB client"
 mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
 VALIDATE $? "Load catalogue products"
 
-systemctl retsart catalogue
+systemctl restart catalogue
 VALIDATE $? "Restarted catalogue"
