@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
+trap 'echo "There is an error in $LINENO, Command is: $BASH_COMMAND"' ERR
 
 
 USERID=$(id -u)
@@ -50,7 +51,7 @@ systemctl daemon-reload
 systemctl enable catalogue &>>$LOG_FILE
 
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
-dnf install mongodb-mongoshhhkj -y &>>$LOG_FILE
+dnf install mongodb-mongo -y &>>$LOG_FILE
 
 INDEX=$(mongosh mongodb.abhidevops.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
 if [ $INDEX -le 0 ]; then
