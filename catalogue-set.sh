@@ -51,7 +51,7 @@ systemctl daemon-reload
 systemctl enable catalogue &>>$LOG_FILE
 
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
-dnf install mongodb-mongos -y &>>$LOG_FILE
+dnf install mongodb-mongosh -y &>>$LOG_FILE
 
 INDEX=$(mongosh mongodb.abhidevops.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
 if [ $INDEX -le 0 ]; then
