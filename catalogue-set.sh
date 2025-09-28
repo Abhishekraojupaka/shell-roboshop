@@ -50,7 +50,7 @@ cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
 systemctl daemon-reload
 systemctl enable catalogue &>>$LOG_FILE
 
-cp $SCRIPT_DIR/mongo.repojjjjjj /etc/yum.repos.d/mongo.repo
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 dnf install mongodb-mongo -y &>>$LOG_FILE
 
 INDEX=$(mongosh mongodb.abhidevops.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
